@@ -7,7 +7,9 @@
 
 - **Next.js** (React + TypeScript) + **Tailwind CSS**
 - 연한 민트 파스텔 테마
-- Google 로그인 (@react-oauth/google) — 커스텀 디자인 버튼
+- Google 로그인 (@react-oauth/google) — 구글 기본 버튼
+  (예전엔 커스텀 버튼 위에 투명하게 겹치는 방식이었는데, 구글의 클릭재킹 방지에
+   막혀 눌러도 반응하지 않아서 기본 버튼으로 바꿨어요)
 
 ## 화면 구성
 
