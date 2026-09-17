@@ -14,6 +14,7 @@ const posts = [1, 2, 3, 4].map((id) => ({
   content: `본문 ${id}`,
   author_nickname: "고양이",
   is_author: false,
+  view_count: id,
   created_at: "2026-09-17T12:00:00Z",
   updated_at: "2026-09-17T12:00:00Z",
 }));

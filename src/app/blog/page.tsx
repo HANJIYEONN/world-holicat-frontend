@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import BlogPostList from "@/components/BlogPostList";
+import BlogHomeContent from "@/components/BlogHomeContent";
 import { PageTitle, useT } from "@/i18n/LanguageProvider";
 
 export default function BlogPage() {
   const t = useT();
 
   return (
-    <main className="blog-wood-page mx-auto min-h-screen w-full max-w-2xl px-6 py-10 text-[#3f2b22] shadow-[0_0_34px_rgba(23,13,9,0.22)]">
+    <main className="blog-wood-page mx-auto min-h-screen w-full max-w-5xl px-6 py-10 text-[#3f2b22] shadow-[0_0_34px_rgba(23,13,9,0.22)]">
       <PageTitle title={t.blog.title} />
       <Link href="/" className="text-sm text-[#806044] hover:underline">
         ← {t.common.home}
@@ -27,15 +27,7 @@ export default function BlogPage() {
         </Link>
       </div>
 
-      <section className="mt-10">
-        <div className="flex items-center justify-between gap-4">
-          <h2 className="text-lg font-bold">{t.blog.recentPosts}</h2>
-          <Link href="/blog/posts" className="text-sm font-semibold text-[#6b412c] hover:underline">
-            {t.blog.viewAll} →
-          </Link>
-        </div>
-        <BlogPostList limit={3} />
-      </section>
+      <BlogHomeContent />
     </main>
   );
 }

@@ -1,10 +1,10 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PageTitle, useLanguage } from "@/i18n/LanguageProvider";
-import { deleteBlogPost, fetchBlogPost, type BlogPost } from "@/lib/blogApi";
+import { deleteBlogPost, recordBlogPostView, type BlogPost } from "@/lib/blogApi";
 
 export default function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: rawId } = use(params);
@@ -15,11 +15,13 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
   const [post, setPost] = useState<BlogPost | null>(null);
   const [failed, setFailed] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const viewRequest = useRef<Promise<BlogPost> | null>(null);
 
   useEffect(() => {
     if (invalidId) return;
     let cancelled = false;
-    fetchBlogPost(id)
+    viewRequest.current ??= recordBlogPostView(id);
+    viewRequest.current
       .then((loaded) => {
         if (!cancelled) setPost(loaded);
       })
@@ -75,7 +77,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
         <header className="border-b border-[#c9a77d] pb-6">
           <h1 className="break-words text-3xl font-bold leading-tight">{post.title}</h1>
           <p className="mt-3 text-sm text-[#806044]">
-            {date} · {post.author_nickname}
+            {date} · {post.author_nickname} · {t.blog.views(post.view_count)}
           </p>
 
           {post.is_author && (

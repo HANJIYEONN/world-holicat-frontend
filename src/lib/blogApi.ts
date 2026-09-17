@@ -8,6 +8,7 @@ export type BlogPost = {
   content: string;
   author_nickname: string;
   is_author: boolean;
+  view_count: number;
   created_at: string;
   updated_at: string;
 };
@@ -32,6 +33,16 @@ export async function createBlogPost(title: string, content: string): Promise<Bl
 
 export async function fetchBlogPost(id: number): Promise<BlogPost> {
   const res = await fetch(`${BASE}/${id}`, { headers: authHeaders() });
+  checkAuth(res);
+  if (!res.ok) return fail(res, "글을 불러오지 못했어요");
+  return res.json();
+}
+
+export async function recordBlogPostView(id: number): Promise<BlogPost> {
+  const res = await fetch(`${BASE}/${id}/view`, {
+    method: "POST",
+    headers: authHeaders(),
+  });
   checkAuth(res);
   if (!res.ok) return fail(res, "글을 불러오지 못했어요");
   return res.json();

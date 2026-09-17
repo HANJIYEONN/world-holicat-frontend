@@ -5,6 +5,7 @@ import {
   deleteBlogPost,
   fetchBlogPost,
   fetchBlogPosts,
+  recordBlogPostView,
   updateBlogPost,
 } from "./blogApi";
 
@@ -48,6 +49,13 @@ describe("블로그 글 API", () => {
     const fetchSpy = mockFetch({ id: 7 });
     await fetchBlogPost(7);
     expect(fetchSpy.mock.calls[0][0]).toMatch(/\/posts\/7$/);
+  });
+
+  it("상세 화면 방문을 POST로 한 번 기록한다", async () => {
+    const fetchSpy = mockFetch({ id: 7, view_count: 1 });
+    await recordBlogPostView(7);
+    expect(fetchSpy.mock.calls[0][0]).toMatch(/\/posts\/7\/view$/);
+    expect(fetchSpy.mock.calls[0][1].method).toBe("POST");
   });
 
   it("수정할 제목과 본문을 PUT으로 보낸다", async () => {

@@ -85,7 +85,7 @@ export default function BlogPostList({ limit, layout = "list" }: BlogPostListPro
             {post.title}
           </h2>
           <p className="mt-2 text-xs text-[#8a674b]">
-            {writtenAt(post.created_at)} · {post.author_nickname}
+            {writtenAt(post.created_at)} · {post.author_nickname} · {t.blog.views(post.view_count)}
           </p>
           <p
             className={`mt-4 whitespace-pre-wrap break-words text-sm leading-7 text-[#6a4b35] ${
